@@ -2,6 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 const session = require('express-session');
 const cors = require('cors');
+const fs = require('fs');
 
 // No user session
 // MongoDB later
@@ -17,12 +18,92 @@ server.use(express.json());
 server.use(session({ secret: 'our new secret'}));
 
 server.get('/ac/on', (req, res) => {
-    console.log(`Recepeted ON from mobile`);
-    res.json({ success : true });
+  console.log(`Recepeted ON from mobile`);
+
+  fs.writeFile("gpio.txt", "1", (err) => {
+    if (err)
+    console.log(err);
+    else {
+       console.log("File written successfully\n");
+       console.log("The written has the following contents:");
+       console.log(fs.readFileSync("gpio.txt", "utf8"));
+    }
+  });
+
+  res.json({ success : true });
 });
 
 server.get('/ac/off', (req, res) => {
-    console.log(`Recepeted OFF from mobile`);
+  console.log(`Recepeted OFF from mobile`);
+  
+  fs.writeFile("gpio.txt", "0", (err) => {
+    if (err)
+    console.log(err);
+    else {
+       console.log("File written successfully\n");
+       console.log("The written has the following contents:");
+       console.log(fs.readFileSync("gpio.txt", "utf8"));
+    }
+  });
+
+    res.json({ success : true });
+});
+
+// 1 && 2
+
+server.get('/ac1/on', (req, res) => {
+  console.log(`Recepeted ON from mobile`);
+
+  fs.writeFile("gpio23.txt", "1", (err) => {
+    if (err)
+    console.log(err);
+    else {
+       console.log(fs.readFileSync("gpio23.txt", "utf8"));
+    }
+  });
+
+  res.json({ success : true });
+});
+
+server.get('/ac1/off', (req, res) => {
+  console.log(`Recepeted OFF from mobile`);
+  
+  fs.writeFile("gpio23.txt", "0", (err) => {
+    if (err)
+    console.log(err);
+    else {
+       console.log(fs.readFileSync("gpio23.txt", "utf8"));
+    }
+  });
+
+    res.json({ success : true });
+});
+
+server.get('/ac2/on', (req, res) => {
+  console.log(`Recepeted ON from mobile`);
+
+  fs.writeFile("gpio24.txt", "1", (err) => {
+    if (err)
+    console.log(err);
+    else {
+       console.log(fs.readFileSync("gpio24.txt", "utf8"));
+    }
+  });
+
+  res.json({ success : true });
+});
+
+server.get('/ac2/off', (req, res) => {
+  console.log(`Recepeted OFF from mobile`);
+  
+  fs.writeFile("gpio24.txt", "0", (err) => {
+    if (err)
+    console.log(err);
+    else {
+       console.log(fs.readFileSync("gpio24.txt", "utf8"));
+    }
+  });
+
     res.json({ success : true });
 });
 
